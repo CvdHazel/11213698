@@ -9,7 +9,7 @@ I'm afraid you don't love me anymore/
 'Cause a kid on the 'gram in a Black Dahlia tank/
 Says it ain't heavy metal"*
 
-This is why this corpus is a good representation of choices artist make. I want to know how much exactly their music has changed and if their 'old' images still lives on in their new one. 
+This is why this corpus is a good representation of choices artist make. I want to know how much exactly their music has changed and if their 'old' image still lives on in their new one. 
 
 In this first week I have already found differences between the albums by using the Spotify features. 'Dancebility' in *amo* (M = 0.522 and SD = 0.121) is much higher than the other five albums. Their first album *Count your Blessings* has a dancibility mean of 0.309 and standard deviation of 0.0855 and the album that scored the lowest mean on dancebility is *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret* (M = 0.273 and SD = 0.111). 
 
