@@ -2,14 +2,14 @@
 
 ## Week 6
 
-The rock/metal band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The sound of this album is totally different than fans are used to hearing from them. They are questioning if Bring Me The Horizon is getting less and less heavy metal and turning into a pop band. That is the reason why I'm using this album as my corpus and comparing it to their older albums. It represents the changes artists make in their carreer and maybe also a reason why they do it. One song called 'heavy metal' off Bring Me The Horizon's new album talks about their change in genre and the reaction of their fans:
+The rock/metal band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The sound of this album is totally different than fans are used to hearing from them. That is the reason why I'm using this album as my corpus and comparing it to their older albums. It represents the changes artists make in their carreer and maybe also a reason why they do it. One song called 'heavy metal' off Bring Me The Horizon's new album talks about their change in genre and the reaction of their fans:
 
 *"And I keep picking petals/
 I'm afraid you don't love me anymore/
 'Cause a kid on the 'gram in a Black Dahlia tank/
 Says it ain't heavy metal"*
 
-This is why this corpus is a good representation of choices artist make. I want to know: is Bring Me The Horizon leaving their 'heavy metal' image behind and if yes, do they still imply elements of their 'old' image in their new one?
+This is why this corpus is a good representation of choices artist make. I want to know how much exactly their music has changed and if their 'old' images still lives on in their new one. 
 
 In this first week I have already found differences between the albums by using the Spotify features. 'Dancebility' in *amo* (M = 0.522 and SD = 0.121) is much higher than the other five albums. Their first album *Count your Blessings* has a dancibility mean of 0.309 and standard deviation of 0.0855 and the album that scored the lowest mean on dancebility is *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret* (M = 0.273 and SD = 0.111). 
 
