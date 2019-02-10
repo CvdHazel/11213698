@@ -1,6 +1,6 @@
 # 11213698
 
-## Homework Week 6
+## Week 6
 
 The rock band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The sound of this album is totally different than fans are used to hearing from them. That is the reason why I'm using this album as my corpus and comparing it to their older albums. It represents the changes artists make in their carreer and maybe also a reason why they do it. One song called 'heavy metal' off Bring Me The Horizon's new album talks about their change in genre and the reaction of their fans:
 
