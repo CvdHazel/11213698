@@ -4,7 +4,7 @@
 
 The rock band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The sound of this album is totally different than we are used to. That is why I'm using this album as my corpus and comparing it to their older albums. It represents the changes artists make in their carreer and maybe also a reason why they do it. One song called 'heavy metal' off their new album talks about their change in genre and the reaction of their fans:
 
-*"And I keep picking petals  
+*"And I keep picking petals<br/>  
 I'm afraid you don't love me anymore  
 'Cause a kid on the 'gram in a Black Dahlia tank  
 Says it ain't heavy metal"*
