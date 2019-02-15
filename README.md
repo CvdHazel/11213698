@@ -1,17 +1,24 @@
-# 11213698
+# Portfolio Computational Musicology
 
-## Week 6
+## Introduction 
 
-The rock/metal band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The sound of this album is totally different than fans are used to hearing from them. That is the reason why I'm using this album as my corpus and comparing it to their older albums. It represents the changes artists make in their carreer and maybe also a reason why they do it. One song called 'heavy metal' off Bring Me The Horizon's new album talks about their change in genre and the reaction of their fans:
+The rock/metal band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The reaction on the new album is divided. The sound of this album is totally different than fans are used to hearing from them. It feels like they are stepping out of their 'heavy metal' image and taking on a new one. One song called 'heavy metal' of Bring Me The Horizon's new album talks about their change in genre and the reaction of their fans:
 
-*"And I keep picking petals/
-I'm afraid you don't love me anymore/
-'Cause a kid on the 'gram in a Black Dahlia tank/
+*"And I keep picking petals
+I'm afraid you don't love me anymore
+'Cause a kid on the 'gram in a Black Dahlia tank
 Says it ain't heavy metal"*
 
-This is why this corpus is a good representation of choices artist make. I want to know how much exactly their music has changed and if their 'old' image still lives on in their new one. 
+I want to know if their new album is really that different from the other albums and what the difference is exactly. Is it true that they are changing their image and what are they changing it to? My research question is therefore: Is Bring Me The Horizon creating a new musical image and what is this image exactly?
 
-In this first week I have already found differences between the albums by using the Spotify features. 'Dancebility' in *amo* (M = 0.522 and SD = 0.121) is much higher than the other five albums. Their first album *Count your Blessings* has a dancibility mean of 0.309 and standard deviation of 0.0855 and the album that scored the lowest mean on dancebility is *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret* (M = 0.273 and SD = 0.111). 
+##Methode
 
-While *amo* scores the highest on 'dancebility', it scores the lowest on the 'energy' feature. Here the mean is 0.785 and standard deviation is 0.165. *Count your Blessings* has a mean of 0.900 and standard deviation of 0.198, but *Sempiternal* exceeds this with a mean of 0.912 and a standard deviation of 0.0883. The difference in energy between these three albums is certainly noticable for listeners. "Energetic tracks feel fast, loud and noisy" as Spotify states and some might define heavy metal the same. If we use this statement we can conclude that Bring Me The Horizon's first album is more 'heavy metal' than their latest one, which is what a lot of fans say and the band themselves predicted in their new song 'heavy metal'. 
+To anwer my research question I'm using a handfull of different Spofity playlists to compare their features. My main corpus is obviously Bring Me The Horizon's newest album *amo*. Besides that I'm also looking into all their old albums: *Count Your Blessings*, *Suidice Season*, *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret*, *Sempiternal* and *That's the Spirit*. To get the Spotify features for the albums, I've make seperate playlist for each. With the help of these albums I can compare the new album to their old ones and see if there are differences and similarities. I'm not only doing this between albums, but also with genres. I'm using different Spotify playlists to compare them to the albums and see which genre fits the best per album. The playlist I'm using for this are: Rock Classics, Pure Pop Punk, Heavy Metal, Pop Internacional and Ultimate Indie. By using the Bring Me The Horizon albums and the genre playlist, I hope to answer my research question. 
+
+##Album Features
+
+
+
+
+
 
