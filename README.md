@@ -17,10 +17,33 @@ To anwer my research question I'm using a handfull of different Spofity playlist
 
 ## Album Features
 
+### Acousticness 
+
+![AcousticAlbums](acousticalbums.png)
+
 ### Danceability
 
 ![DanceAlbums](dancealbums.png)
 
+### Energy
+
+![EnergyAlbums](energyalbums.png)
+
+### Instrumentalness 
+
+![InstrumentAlbums](instrumentalbums.png)
+
+### Liveness
+
+![LivenessAlbums](livealbums.png)
+
+### Tempo
+
+![TempoAlbums](tempoalbums.png)
+
+### Valence
+
+![ValenceAlbums](valencealbums.png)
 
 ## Genre Features 
 
