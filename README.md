@@ -31,17 +31,19 @@ Unlike acousticness, danceability has some interessting results regarding their 
 
 ### Energy
 
+...
+
 ![EnergyAlbums](energyalbums.png)
 
-### Instrumentalness 
-
-![InstrumentAlbums](instrumentalbums.png)
-
 ### Liveness
+
+...
 
 ![LivenessAlbums](livealbums.png)
 
 ### Tempo
+
+...
 
 ![TempoAlbums](tempoalbums.png)
 
@@ -53,15 +55,30 @@ With valence the albums are arranged in the exact same order as they did for dan
 
 ## Genre Features 
 
-### Heavy Metal
+### Acousticness
 
-### Indie
+![AcousticGenre](acousticgenre.png)
 
-### Pop
+### Danceability
 
-### Pop Punk
+![DanceGenre](dancegenre.png)
 
-### Rock
+### Energy
+
+...
+
+### Liveness
+
+...
+
+### Tempo 
+
+...
+
+### Valence
+
+![ValenceGenre](valencegenre.png)
+
 
 
 
