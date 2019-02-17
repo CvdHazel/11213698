@@ -17,6 +17,12 @@ To anwer my research question I'm using a handfull of different Spofity playlist
 
 ## Album Features
 
+### Danceability
+
+![DanceAlbums](dancealbums.png)
+
+
+## Genre Features 
 
 
 
