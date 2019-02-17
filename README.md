@@ -19,7 +19,7 @@ To anwer my research question I'm using a handfull of different Spofity playlist
 
 ### Acousticness 
 
-For Spotify 'Acousticness' means if a track is acoustic and is calcultated on a scale from 0 to 1, one having a high confidence that the track is acoustic. As seen in the graph below, there is a lot of difference between the acousticness of the different albums. The second album *Suicide Season* scores the lowest (M = 0.003 and SD = 0.01) and the third album *There is a Hell...* has the highest score (M = 0.08 and SD = 0.25). Further there is no 'logical' order of the rest of the albums, so newer and older albums not arranged in order. 
+For Spotify 'acousticness' means if a track is acoustic and it is calcultated on a scale from 0 to 1, one being high confidence that the track is acoustic. As seen in the graph below, there is a lot of difference between the acousticness of the albums. The second album *Suicide Season* scores the lowest (M = 0.003 and SD = 0.01) and the third album *There is a Hell...* has the highest score (M = 0.08 and SD = 0.25). Further there is no 'logical' order for the rest of the albums, so they are not in order of oldest to newest. 
 
 ![AcousticAlbums](acousticalbums.png)
 
@@ -35,12 +35,6 @@ Unlike acousticness, danceability has some interessting results regarding their 
 
 ![EnergyAlbums](energyalbums.png)
 
-### Liveness
-
-...
-
-![LivenessAlbums](livealbums.png)
-
 ### Tempo
 
 ...
@@ -49,7 +43,7 @@ Unlike acousticness, danceability has some interessting results regarding their 
 
 ### Valence
 
-With valence the albums are arranged in the exact same order as they did for danceability. The third album bottom and the newest on top. The difference between those two albums are way bigger than for danceability. Here the lowest score is 0.09 (for the mean and 0.06 for SD) and the highest has a mean of 0.40 (and a SD of 0.17). Spotify describes valence as the positiveness conveyed by a track, where the higher the score the more positive (e.g. happy, cheerful, euphoric) it is. Because of this we can say that the new album *amo* is definately more positive, but in comparison to the whole scale of valence all the albums are on the negative (e.g. sad, depressed, angry) side. Therefore the feeling of the songs throughout different have not changed dramatically, although it has become more positive over the years. 
+With valence the albums are arranged in the exact same order as they did for danceability. The third album bottom and the sixth on top. The difference between those two albums are way bigger than for danceability. Here the lowest score is 0.09 (for the mean and 0.06 for SD) and the highest has a mean of 0.40 (and a SD of 0.17). Spotify describes valence as the positiveness conveyed by a track, where the higher the score the more positive (e.g. happy, cheerful, euphoric) it is. Because of this we can say that the new album *amo* is definately more positive, but in comparison to the whole scale of valence all the albums are on the negative (e.g. sad, depressed, angry) side. Therefore the feeling of the songs throughout different albums have not changed dramatically, although it has become more positive over the years. 
 
 ![ValenceAlbums](valencealbums.png)
 
@@ -64,10 +58,6 @@ With valence the albums are arranged in the exact same order as they did for dan
 ![DanceGenre](dancegenre.png)
 
 ### Energy
-
-...
-
-### Liveness
 
 ...
 
