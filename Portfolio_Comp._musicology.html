@@ -2628,6 +2628,14 @@ window.FlexDashboardComponents.push({
 <div class="knitr-options" data-fig-width="576" data-fig-height="460">
 
 </div>
+<pre class="{r]"><code>compmus_gather_chroma &lt;- function(heavymetal_song)
+{
+    data %&gt;% 
+    mutate(pitches = map(pitches, bind_rows)) %&gt;% unnest(pitches) %&gt;% 
+    gather(&quot;pitch_class&quot;, &quot;value&quot;, C:B) %&gt;% 
+    mutate(pitch_class = fct_shift(factor(pitch_class), 3))
+}</code></pre>
+<hr />
 </div>
 
 </div>
