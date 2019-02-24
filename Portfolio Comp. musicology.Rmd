@@ -1,0 +1,113 @@
+---
+title: "Portfolio Computational Musicology"
+author: "Chayenne van den Hazel"
+date: "23 February 2019"
+output: 
+    flexdashboard::flex_dashboard:
+        storyboard: true
+        theme: lumen
+---
+
+```{r}
+library(tidyverse)
+library(spotifyr)
+library(plotly)
+Sys.setenv(SPOTIFY_CLIENT_ID = '9770ee77431949d080fdc8a169bb3899')
+Sys.setenv(SPOTIFY_CLIENT_SECRET ='80492b1686844994a7ffd6bca1782363')
+```
+
+### What is this storyboard about? 
+
+The rock/metal band Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The reaction on the new album is divided. The sound of this album is totally different than fans are used to hearing from them. It feels like they are stepping out of their 'heavy metal' image and taking on a new one. One song called 'heavy metal' of Bring Me The Horizon's new album talks about their change in genre and the reaction of their fans:
+
+*"And I keep picking petals
+I'm afraid you don't love me anymore
+'Cause a kid on the 'gram in a Black Dahlia tank
+Says it ain't heavy metal"*
+
+I want to know if their new album is really that different from the other albums and what the difference is exactly. Is it true that they are changing their image and what are they changing it to? My research question is therefore: Is Bring Me The Horizon creating a new musical image and what is this image exactly?
+
+To anwer my research question I'm using a handfull of different Spofity playlists to compare their features. My main corpus is obviously Bring Me The Horizon's newest album *amo*. Besides that I'm also looking into all their old albums: *Count Your Blessings*, *Suidice Season*, *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret*, *Sempiternal* and *That's the Spirit*. To get the Spotify features for the albums, I've make seperate playlist for each. With the help of these albums I can compare the new album to their old ones and see if there are differences and similarities. I'm not only doing this between albums, but also with genres. I'm using different Spotify playlists to compare them to the albums and see which genre fits the best per album. The playlist I'm using for this are: Rock Classics, Pure Pop Punk, Heavy Metal, Pop Internacional and Ultimate Indie. By using the Bring Me The Horizon albums and the genre playlist, I hope to answer my research question 
+
+
+### Bring Me The Horizon's newest album *amo* is not Heavy Metal?
+
+```{r}
+heavymetal <- get_playlist_audio_features('spotify', '37i9dQZF1DX9qNs32fujYe')
+amo <- get_playlist_audio_features('faaske', '1GEk4D55A3EI7uKAcr1N0w')
+
+heavy_metal <-
+    heavymetal %>% mutate(playlist = "Heavy Metal") %>%
+      bind_rows(amo %>% mutate(playlist = "amo"))
+
+amometal<-
+  heavy_metal %>%
+    ggplot(aes(x = valence, y = energy, size = danceability, color = mode))+
+        geom_point(alpha = 0.5) +
+        geom_rug(size = 0.1) +
+        facet_wrap(~ playlist) +
+        scale_x_continuous(limits = c(0, 1),breaks = c(0, 0.50, 1),minor_breaks = NULL) +    
+        scale_y_continuous(limits = c(0, 1),breaks = c(0, 0.50, 1),minor_breaks = NULL)
+```
+
+***
+
+Most people will describe Bring Me The Horizon as a (Heavy) Metal band.The newest album *amo* has had a lot of comments about it not being Heavy Metal anymore and the band changing the direction of their music. These graph compare *amo* to the Spotify playlist for Heavy Metal. The graphs compare four features: mode, danceability, valence and energy. As can be seen in the graphs, both *amo* and the playlist score high on energy and somewhat lower on the valence scale. When looking at the concentration of the scores, I would say that both score on average the same on valence, but *amo* scores a bit lower on energy than the Heavy Metal playlist. *amo* has one outlier, this is a song called 'i apologise if you feel something'. I can understand that this songs scores a lot lower on the energy features than the rest. It is a pretty mellow song, with slow sining and a computorized beat. For danceability, both album and playlist have a similar distribution. Most songs score around 0.4 on danceability and about the same amount for both score higher and lower than that. 
+
+### Does 'heavy metal' sound like Heavy Metal?
+
+```{r}
+get_tidy_audio_analysis <- function(track_uri, ...) 
+{
+    get_track_audio_analysis(track_uri, ...) %>% 
+        list %>% transpose %>% as_tibble %>% 
+        mutate_at(vars(meta, track), . %>% map(as_tibble)) %>% 
+        unnest(meta, track) %>% 
+        select(
+            analyzer_version,
+            duration,
+            contains('fade'),
+            ends_with('confidence'),
+            bars:segments) %>% 
+        mutate_at(
+            vars(bars, beats, tatums, sections), 
+            . %>% map(bind_rows)) %>% 
+        mutate(
+            segments =
+                map(
+                    segments,
+                    . %>% 
+                        transpose %>% as_tibble %>% 
+                        unnest(.preserve = c(pitches, timbre)) %>% 
+                        mutate(
+                            pitches = 
+                                map(
+                                    pitches, 
+                                    . %>% 
+                                        flatten_dbl %>% 
+                                        set_names(
+                                            c( 
+                                                'C', 'C#|Db', 'D', 'D#|Eb', 
+                                                'E', 'F', 'F#|Gb', 'G',
+                                                'G#|Ab', 'A', 'A#|Bb', 'B'))),
+                            timbre = 
+                                map(
+                                    timbre,
+                                    . %>% 
+                                        flatten_dbl %>% 
+                                        set_names(
+                                            c(
+                                                'c1', 'c2', 'c3', 'c4', 
+                                                'c5', 'c6', 'c7', 'c8',
+                                                'c9', 'c10', 'c11', 'c12'))))))
+}
+```
+
+```{r}
+heavymetal_song <- 
+    get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
+    select(segments) %>% unnest(segments) %>% 
+    select(start, duration, pitches)
+```
+
+

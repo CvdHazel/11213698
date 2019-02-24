@@ -1,3 +1,7 @@
+heavy_metal <-
+    heavymetal %>% mutate(playlist = "Heavy Metal") %>%
+      bind_rows(amo %>% mutate(playlist = "amo"))
+
 ... %>%
     ggplot(aes(x = valence, y = energy, size = tempo, color = mode))+
         geom_point(alpha = 0.5) +
