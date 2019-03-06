@@ -13,7 +13,7 @@ library(tidyverse)
 library(spotifyr)
 library(compmus)
 library(plotly)
-source(spotify.R)
+source('spotify.R')
 ```
 
 ### What is this storyboard about? 
@@ -47,7 +47,7 @@ albums <-
 
 #Plot valence/energy first and last ablum 
 
-ve_album<- albums %>%                       # Start with awards.
+ve_album <- albums %>%                       # Start with awards.
     ggplot(                      # Set up the plot.
         aes(
             x = valence,
