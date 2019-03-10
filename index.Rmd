@@ -30,20 +30,30 @@ I want to know if their new album is really that different from the other albums
 To anwer my research question I'm using a handfull of different Spofity playlists to compare their features. My main corpus is obviously Bring Me The Horizon's newest album *amo*. Besides that I'm also looking into all their old albums: *Count Your Blessings*, *Suidice Season*, *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret*, *Sempiternal* and *That's the Spirit*. To get the Spotify features for the albums, I've make seperate playlist for each. With the help of these albums I can compare the new album to their old ones and see if there are differences and similarities. I'm not only doing this between albums, but also with genres. I'm using different Spotify playlists to compare them to the albums and see which genre fits the best per album. The playlist I'm using for this are: Rock Classics, Pure Pop Punk, Heavy Metal, Pop Internacional and Ultimate Indie. By using the Bring Me The Horizon albums and the genre playlist, I hope to answer my research question 
 
 
-### Is Bring Me The Horizon's newest album really that different from their first album?
+### Is Bring Me The Horizon's newest album really that different from the rest?
 
 ```{r}
 # Data Spotify features 
 
 blessings <- get_playlist_audio_features('faaske', '3q4J2ymyPxuRH49FUexRDA')
 amo <- get_playlist_audio_features('faaske', '1GEk4D55A3EI7uKAcr1N0w')
+spirit <- get_playlist_audio_features('faaske', '4cIxKAxJ55NmI5Cz5Gp1jn')
+sempiternal <- get_playlist_audio_features('faaske', '0lNxfrMHxBMcUnQps2DkeU')
+hell <- get_playlist_audio_features('faaske', '0SIOLbQcEkakGKEmClItXd')
+suicide <- get_playlist_audio_features('faaske', '0RSC1KIQe8DOpLGdgKZLcE')
+
 bmth <- get_artist_audio_features('Bring Me The Horizon')
+
 
 # Combine data sets
 
 albums <-
-    blessings %>% mutate(album = "Count your blessings") %>%
-    bind_rows(amo %>% mutate(album = "amo"))
+    blessings %>% mutate(album = "1. Count your blessings") %>%
+    bind_rows(amo %>% mutate(album = "6. amo")) %>%
+    bind_rows(spirit %>% mutate(album = "5. That's the Spirit")) %>%
+    bind_rows(sempiternal %>% mutate(album = "4. Sempiternal")) %>%
+    bind_rows(hell %>% mutate(album = "3. There is a Hell...")) %>%
+    bind_rows(suicide %>% mutate(album = "2. Suicide Season"))
 
 #Plot valence/energy first and last ablum 
 
@@ -52,13 +62,13 @@ ve_album <- albums %>%                       # Start with awards.
         aes(
             x = valence,
             y = energy,
-            size = danceability,
-            colour = mode
+            size = loudness,
+            colour = album,
+            label = track_name 
         )
     ) +
     geom_point(alpha = 0.8) +               # Scatter plot.
     geom_rug(size = 0.1) +       # Add 'fringes' to show data distribution.
-    facet_wrap(~ album) +     # Separate charts per playlist.
     scale_x_continuous(          # Fine-tune the x axis.
         limits = c(0, 1),
         breaks = c(0, 0.50, 1),  # Use grid-lines for quadrants only.
@@ -81,7 +91,7 @@ ve_album <- albums %>%                       # Start with awards.
     labs(                        # Make the titles nice.
         x = "Valence",
         y = "Energy",
-        colour = "Mode"
+        colour = "Album"
     )
 
 ggplotly(ve_album)
@@ -90,12 +100,13 @@ ggplotly(ve_album)
 
 ***
 
-In this graph, the Spotify features 'Valence' and 'Energy' are plotted against eachother for Bring Me The Horizon's first (*Count your Blessings*) and latest album (*amo*). Both albums score low on valence, but really high on energy. In general, *amo* scores higher on valence than *Count your Blessings*. Both albums have an outlier with a lower energy level than the rest of the songs. The size of the dots show the danceability of the songs. The songs on *amo* are in general more 'danceable' than the songs on *Count your Blessings*. 
+In this graph, the Spotify features 'Valence' and 'Energy' are plotted against eachother for all the albums Bring Me The Horizon has made and the loudness of the songs is shown by the size of the dots. As can be seen, their music mostly scores below 0.5 on valence and in general scores really high on energy. An interesting finding in this graph is the shift in valence between the first and last albums. The first album *Count your blessings* scores low on valence, like most of their songs in general. But looking at the last two albums *That's the Spirit* and *amo*, it can be seen that those songs score the highest on valence. Therefore it can be said that the outliers on the valence scale for all Bring Me The Horizon songs, are actually the songs of these last two albums. When looking at the energy scale, there are three main outliers: a song calles 'Memorial' from *There is a Hell...*, 'i apologise if you feel something' from *amo* and 'Fifteen Fantoms, Counting' from *Count your Blessings*. 'Memorial' and 'Fifteen Fantoms, Counting' are both slow instrumental songs and that's the reason they score lower on energy than the rest of the songs. 'i apologise if you feel somthing' is not totally instrumental, but if a slower song compared to the rest of the album. This songs is also used as the intro to Bring Me The Horizon's concert, which is not surprising because it sounds very mysterious. 
+
 
 ### Does 'heavy metal' sound like Heavy Metal?
 
 ```{r}
-# chromogram heavy metal 
+# ceptogram heavy metal 
 
 heavymetal_song <- 
     get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
@@ -125,7 +136,7 @@ heavymetal_song %>%
     scale_fill_viridis_c(option = 'E') +
     theme_classic()
 
-# Chromagram walk
+# ceptogram walk
 
 walk_song <- 
     get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
@@ -161,7 +172,7 @@ walk_song %>%
 
 ***
 
-Here you can see two chromagrams and the differences are immediately noticable. The first chromagram is of the song 'heavy metal' on Bring Me The Horizon's latest album *amo*. The second graph is a chromagram of the most popular song on Spotify's 'Heavy Metal' playlist 'Walk' by Pantara. Pantera is an American groovemetalband who are known as trendsetters in their genre in the nineties. 
+Here you can see two cepstrograms and the differences are immediately noticable. The first cepstrogram is of the song 'heavy metal' from Bring Me The Horizon's latest album *amo*. The second graph is a cepstrogram of the most popular song on Spotify's 'Heavy Metal' playlist 'Walk' by Pantara. Pantera is an American groovemetalband who are known as trendsetters in their genre in the nineties. 
 
 ### Does 'heavy metal' have the same structure as Heavy Metal?
 
@@ -204,4 +215,56 @@ walk_song %>%
 
 ***
 
-Before we looked at the chromagrams between 'heavy metal' by Bring Me The Horizon and 'walk' by Pantera. These graphs are Self-Similarity Martices based on timbre. Different than the chromagrams, here we don't see as much differences between the two songs. The horizontal and vertical yellow lines cross about the same time for both songs. 
+Before we looked at the cepstrograms between 'heavy metal' by Bring Me The Horizon and 'walk' by Pantera. These graphs are Self-Similarity Martices based on timbre. Different than the cepstrograms, here we don't see as much differences between the two songs. The horizontal and vertical yellow lines cross about the same time for both songs, this is where in both songs the bridge comes in. In 'heavy metal' the bridge consist of a beatbox section where all the other instruments are dropped. The same happens in 'walk', but instead of a beatbox section, a guitar solo is added with drums. Beatboxing imitates instruments and my guess is that therefore the crossing yellow lines in 'heavy metal' are less clear than in 'walk', where there are just two instruments present in the bridge. 
+
+### lalal
+
+```{r}
+# Chordagram sugar from amo
+sugar_chord <- 
+    get_tidy_audio_analysis('3Ddgh4ZwVIkLx0f4WeDFmo') %>% 
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
+
+sugar_chord  %>% 
+    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
+    ggplot(
+        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
+    geom_tile() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_minimal() +
+    labs(x = 'Time (s)', y = '')
+
+# chordagram pray for plagues from Count your Blessings
+
+pray_chord <- 
+    get_tidy_audio_analysis('0zYxfgyqypkG7rRwFqyisT') %>% 
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
+
+pray_chord  %>% 
+    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
+    ggplot(
+        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
+    geom_tile() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_minimal() +
+    labs(x = 'Time (s)', y = '')
+
+
+    
+```
+
+***
+
+On the left two chordagrams are shown for two different songs by Bring Me The Horizon. The first is a chord visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. While the bridge in  'sugar honey ice & tea' comes a bit later than the one in 'Pray for Plagues', they both have one. Both bridges drop a lot of the instruments that can be heard in the rest of the song and slowing it down a bit, making it include less chords at that moment. Also similar in both songs is the usage of the chords. In both songs, the chords that are used the most are used throughout the whole song, so there is no modulation present. 
