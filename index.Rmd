@@ -226,7 +226,7 @@ walk_song %>%
 
 Before we looked at the cepstrograms between 'heavy metal' by Bring Me The Horizon and 'walk' by Pantera. These graphs are Self-Similarity Martices based on timbre. Different than the cepstrograms, here we don't see as much differences between the two songs. The horizontal and vertical yellow lines cross about the same time for both songs, this is where in both songs the bridge comes in. In 'heavy metal' the bridge consist of a beatbox section where all the other instruments are dropped. The same happens in 'walk', but instead of a beatbox section, a guitar solo is added with drums. Beatboxing imitates instruments and my guess is that therefore the crossing yellow lines in 'heavy metal' are less clear than in 'walk', where there are just two instruments present in the bridge. 
 
-### Has Bring Me The Horizon change the way they use keys throughout the years?
+### Has Bring Me The Horizon changed the way they use keys throughout the years?
 
 ```{r}
 
