@@ -10,6 +10,7 @@ output:
 
 ```{r}
 library(tidyverse)
+library(tidymodels)
 library(spotifyr)
 library(compmus)
 library(plotly)
@@ -322,4 +323,116 @@ pray_chord  %>%
 
 ***
 
-On the left two keygrams are shown for two different songs by Bring Me The Horizon. The first is a key visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. While the bridge in  'sugar honey ice & tea' comes a bit later than the one in 'Pray for Plagues', they both have one. Both bridges drop a lot of the instruments that can be heard in the rest of the song and slowing it down a bit, making it include less chords at that moment. Also similar in both songs is the usage of the chords. In both songs, the chords that are used the most are used throughout the whole song, so there is no modulation present. 
+On the left two keygrams are shown for two different songs by Bring Me The Horizon. The first is a key visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. While the bridge in  'sugar honey ice & tea' comes a bit later than the one in 'Pray for Plagues', they both have one. Both bridges drop a lot of the instruments that can be heard in the rest of the song and slowing it down a bit, making it include less chords at that moment. Also similar in both songs is the usage of the chords. In both songs, the chords that are used the most are used throughout the whole song, so there is no modulation present.
+
+### Which genre is the closest to a song?
+
+```{r}
+
+rock <- 
+    get_playlist_audio_features('spotify', '37i9dQZF1DWXRqgorJj26U') %>% 
+    slice(1:20) %>% 
+    add_audio_analysis
+punk <- 
+    get_playlist_audio_features('spotify', '37i9dQZF1DXasneILDRM7B') %>% 
+    slice(1:20) %>% 
+    add_audio_analysis
+heavymetal <- 
+    get_playlist_audio_features('spotify', '37i9dQZF1DX9qNs32fujYe') %>% 
+    slice(1:20) %>% 
+    add_audio_analysis
+pop <- 
+    get_playlist_audio_features('spotify', '37i9dQZF1DX1ngEVM0lKrb') %>% 
+    slice(1:20) %>% 
+    add_audio_analysis
+indie <- 
+    get_playlist_audio_features('spotify', '37i9dQZF1DX2Nc3B70tvx0') %>% 
+    slice(1:20) %>% 
+    add_audio_analysis
+
+genre <- 
+    rock %>% mutate(playlist = "Rock Classics") %>% 
+    bind_rows(
+        punk %>% mutate(playlist = "Pure Pop Punk"),
+        pop %>% mutate(playlist = "Pop Internacional "),
+        indie %>% mutate(playlist = "Ultimate Indie"),
+        heavymetal %>% mutate(playlist = "Heavy Metal")) %>% 
+    mutate(playlist = factor(playlist)) %>% 
+    mutate(
+        segments = 
+            map2(segments, key, compmus_c_transpose)) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'),
+        timbre =
+            map(
+                segments,
+                compmus_summarise, timbre,
+                method = 'mean')) %>% 
+    mutate(pitches = map(pitches, compmus_normalise, 'clr')) %>% 
+    mutate_at(vars(pitches, timbre), map, bind_rows) %>% 
+    unnest(pitches, timbre)
+
+genre_class <- 
+    recipe(playlist ~
+               danceability +
+               energy +
+               loudness +
+               speechiness +
+               acousticness +
+               instrumentalness +
+               liveness +
+               valence +
+               tempo +
+               duration_ms +
+               C + `C#|Db` + D + `D#|Eb` +
+               E + `F` + `F#|Gb` + G +
+               `G#|Ab` + A + `A#|Bb` + B +
+               c01 + c02 + c03 + c04 + c05 + c06 +
+               c07 + c08 + c09 + c10 + c11 + c12,
+           data = genre) %>% 
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    # step_range(all_predictors()) %>% 
+    prep(genre) %>% 
+    juice
+
+genre_cv <- genre_class %>% vfold_cv(5)
+
+genre_knn <- nearest_neighbor(neighbors = 1) %>% set_engine('kknn')
+predict_knn <- function(split)
+    fit(genre_knn, playlist ~ ., data = analysis(split)) %>% 
+    predict(assessment(split), type = 'class') %>%
+    bind_cols(assessment(split))
+
+predict_knn_reduced <- function(split)
+    fit(
+        genre_knn, 
+        playlist ~ c01 + c11 + liveness + energy + acousticness, 
+        data = analysis(split)) %>% 
+    predict(assessment(split), type = 'class') %>%
+    bind_cols(assessment(split))
+genre_cv %>% 
+    mutate(pred = map(splits, predict_knn_reduced)) %>% unnest(pred) %>% 
+    metric_set(accuracy, kap, j_index)(truth = playlist, estimate = .pred_class)
+
+genre_cv %>% 
+    mutate(pred = map(splits, predict_knn_reduced)) %>% unnest(pred) %>% 
+    conf_mat(truth = playlist, estimate = .pred_class) %>% 
+    autoplot(type = 'mosaic')
+
+genre %>%
+    ggplot(aes(x = c01, y = c11, colour = playlist, size = liveness)) +
+    geom_point(alpha = 0.8) +
+    scale_color_brewer(type = 'qual', palette = 'Accent') +
+    labs(x = 'Timbre Component 1', y = 'Timbre Component 11', size = 'Liveness', colour = 'Playlist')
+
+```
+
+
+
+***
+
+I want to use a classifier to find out which genre fits a song the best. If, for example, a song from *Count your Blessings* is closest to the heavy metal genre and a song from *amo* is closest to pop, this will give a good argument in favor of my research question. I have struggled a lot with this weeks homework, because I wasn't able to attend the class. I was able to make the visualizations on the right by using the compmus document, but I wasn't able to make them how I wanted it to and I had trouble reading them. I'm going to work on this for my final portfolio. 
