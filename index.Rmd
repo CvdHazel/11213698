@@ -11,9 +11,11 @@ output:
 ```{r}
 library(tidyverse)
 library(tidymodels)
+library(ggdendro)
+library(protoclust)
+library(heatmaply)
 library(spotifyr)
 library(compmus)
-library(plotly)
 source('spotify.R')
 ```
 
@@ -33,11 +35,6 @@ Says it ain't heavy metal"*
 I want to know if their new album is really that different from the other albums and what the difference is exactly. Is it true that they are changing their image and what are they changing it to? My research question is therefore: Is Bring Me The Horizon creating a new musical image and what is this image exactly?
 
 To anwer my research question I'm using a handfull of different Spofity playlists to compare their features. My main corpus is obviously Bring Me The Horizon's newest album *amo*. Besides that I'm also looking into all their old albums: *Count Your Blessings*, *Suidice Season*, *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret*, *Sempiternal* and *That's the Spirit*. To get the Spotify features for the albums, I've make seperate playlist for each. With the help of these albums I can compare the new album to their old ones and see if there are differences and similarities. I'm not only doing this between albums, but also with genres. I'm using different Spotify playlists to compare them to the albums and see which genre fits the best per album. The playlist I'm using for this are: Rock Classics, Pure Pop Punk, Heavy Metal, Pop Internacional and Ultimate Indie. By using the Bring Me The Horizon albums and the genre playlist, I hope to answer my research question 
-
-
-
-
-
 
 
 ### Is Bring Me The Horizon's newest album really that different from the rest?
@@ -325,7 +322,7 @@ pray_chord  %>%
 
 On the left two keygrams are shown for two different songs by Bring Me The Horizon. The first is a key visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. While the bridge in  'sugar honey ice & tea' comes a bit later than the one in 'Pray for Plagues', they both have one. Both bridges drop a lot of the instruments that can be heard in the rest of the song and slowing it down a bit, making it include less chords at that moment. Also similar in both songs is the usage of the chords. In both songs, the chords that are used the most are used throughout the whole song, so there is no modulation present.
 
-### Which genre is the closest to a song?
+### Which genre is the closest to a song? --> classification 
 
 ```{r}
 
@@ -436,3 +433,104 @@ genre %>%
 ***
 
 I want to use a classifier to find out which genre fits a song the best. If, for example, a song from *Count your Blessings* is closest to the heavy metal genre and a song from *amo* is closest to pop, this will give a good argument in favor of my research question. I have struggled a lot with this weeks homework, because I wasn't able to attend the class. I was able to make the visualizations on the right by using the compmus document, but I wasn't able to make them how I wanted it to and I had trouble reading them. I'm going to work on this for my final portfolio. 
+
+### Clustering
+
+```{r}
+
+# Clustering
+
+bmth_songs <- 
+    get_playlist_audio_features('faaske', '6ya8YDyX7ldJsG1OtYWhl4') %>% 
+    add_audio_analysis %>% 
+    mutate(
+        segments = 
+            map2(segments, key, compmus_c_transpose)) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'),
+        timbre =
+            map(
+                segments,
+                compmus_summarise, timbre,
+                method = 'mean')) %>% 
+    mutate(pitches = map(pitches, compmus_normalise, 'clr')) %>% 
+    mutate_at(vars(pitches, timbre), map, bind_rows) %>% 
+    unnest(pitches, timbre)
+
+# Pre-Processing 
+
+bmth_songs_juice <- 
+    recipe(track_name ~
+               danceability +
+               energy +
+               loudness +
+               speechiness +
+               acousticness +
+               instrumentalness +
+               liveness +
+               valence +
+               tempo +
+               duration_ms +
+               C + `C#|Db` + D + `D#|Eb` +
+               E + `F` + `F#|Gb` + G +
+               `G#|Ab` + A + `A#|Bb` + B +
+               c01 + c02 + c03 + c04 + c05 + c06 +
+               c07 + c08 + c09 + c10 + c11 + c12,
+           data = bmth_songs) %>% 
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    # step_range(all_predictors()) %>% 
+    prep(bmth_songs %>% mutate(track_name = str_trunc(track_name, 20))) %>% 
+    juice %>% 
+    column_to_rownames('track_name')
+
+# Computing distances
+
+bmth_dist <- dist(bmth_songs_juice, method = 'euclidean')
+
+# Hierarchical clustering
+
+protoclust(bmth_dist) %>% dendro_data %>% ggdendrogram
+
+
+```
+
+
+*** 
+
+On the first picture we see a clustering of the 69 Bring Me The Horizon songs from all 6 albums. By looking at it we can devide the songs into four sections:
+1) From 'Memorial' till 'The Sadness Will Never End'
+2) From 'wonderful life' till 'Sleep With One Eye Open'
+3) From 'Don't Go' till 'Liquor & Love Lost'
+4) From 'ouch' till 'Run' 
+The first section can be considered as 'the rest' and so I will focus on the other three sections. 
+
+The 4th section is made up of songs from the last three albums (*Sempiternal*, *That's the Spirit* and *amo*). All the songs from *That's the Spirit* are in this 4th section and the majority of *amo* as well, but for *Sempiternal* this is not the section with the most songs in them. 
+
+*Sempiternal* scores the highest in the 2nd section, with 6 songs from 20 songs in that section. For *Count your Blessings* this section includes the majority of their songs as well (5 songs from the 10 songs on the album). 
+
+When looking at the 3rd section, *There is a Hell Believe Me I've Seen It. There is a Heaven Let's Keep it a Secret* stands out with 8 songs out of 17 in this section. All the other albums except for *That's the Spirit* also have a few songs in this section. 
+
+In general, the most recent albums are clustered together in one section and the older albums are clustered in others. This is very interessting, because it shows that the newer albums are different than the older ones and in such a manner that they (in general) won't cluster with eachother until very high up in the graph. 
+
+
+### Heatmap
+
+```{r}
+
+
+# Heatmap
+
+grDevices::dev.size("px")
+heatmaply(
+    bmth_songs_juice,
+    hclustfun = hclust,
+    # hclustfun = protoclust,
+    # Comment out the hclust_method line when using protoclust.
+    hclust_method = 'average',
+    dist_method = 'euclidean')
+
+```
