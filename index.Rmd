@@ -6,16 +6,16 @@ output:
     flexdashboard::flex_dashboard:
         storyboard: true
         theme: lumen
+        
 ---
 
 ```{r}
 library(tidyverse)
 library(tidymodels)
-library(ggdendro)
 library(protoclust)
 library(heatmaply)
 library(spotifyr)
-library(gridExtra)
+library(ggdendro)
 library(compmus)
 source('spotify.R')
 ```
@@ -26,17 +26,12 @@ source('spotify.R')
 
 ***
 
-!audio[ why you gotta kick me when i'm down](https://open.spotify.com/track/2lLsjgDoS0Hg5pNNHymXGG?si=NvzCIyy7T3-kulE2cm0eLQ){ size=10 duration=10 cycle=forever }
-
 The metalband Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The reaction on the new album is divided. The sound of this album is totally different than fans are used to hearing from them. It feels like they are stepping out of their 'heavy metal' image and taking on a new one. Besides that, it is said that the album is not cohesive because of the many styles of music being incorporated. One song called 'heavy metal' of BMTH's new album talks about their change in genre and the reaction of their fans:
 
 
 *"And I keep picking petals
-
 I'm afraid you don't love me anymore
-
 'Cause a kid on the 'gram in a Black Dahlia tank
-
 Says it ain't heavy metal"*
 
 
@@ -49,10 +44,10 @@ To anwer my research question I'm using a handfull of different Spofity playlist
 This will hopefully answer the first part of my research question, but more is needed to answer the second. Different musical genres can help me figure out what it is that BMTH is changing their image into. I'm going to use different Spotify playlists to compare them to the albums and see which genre fits the best per album. The playlist I'm using for this are: Rock Classics, Pure Pop Punk, Heavy Metal, Pop Internacional and Ultimate Indie. 
 
 
-By using the Bring Me The Horizon albums and the genre playlist, I hope to answer my research question 
+By combining these two elements, the BMTH albums and different genre playlist, I hope to answer my research question. For more information about the albums, the playlists being used and audio samples: see the Appendix. 
 
 
-### Is Bring Me The Horizon's newest album really that different from the rest?
+### Is Bring Me The Horizon's newest album really that different from the others?
 
 ```{r}
 # Data Spotify features 
@@ -185,36 +180,13 @@ As can be seen in the graph on the left, BMTH's music mostly scores below 0.5 on
 Loudness is also an interessting feature to look into. The legend shows that *Sempiternal* scores the hightest and the three older albums score the lowest out of all 6 albums. This is a surprise because the first few albums are definatly considered metal and I would think that those songs would score high on the loudness scale. 
 
   
-### Does 'heavy metal' sound like Heavy Metal?
+### An structural analysis of 'heavy metal' and Heavy Metal
 
 ```{r}
 
-# Chromagram heavymetal 
+# heavy metal Chroma- and Cepstrogram
 
-heavymetal_chroma <- 
-    get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
-    select(segments) %>% unnest(segments) %>% 
-    select(start, duration, pitches)
-
-p1 <-
-heavymetal_chroma %>% 
-    mutate(pitches = map(pitches, compmus_normalise, 'chebyshev')) %>% 
-    compmus_gather_chroma %>% 
-    ggplot(
-        aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = pitch_class, 
-            fill = value)) + 
-    geom_tile() +
-    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
-    scale_fill_viridis_c(option = 'E') +
-    theme_classic() +
-    ggtitle("Chroma")
-
-# Cepstrogram heavy metal
-
-heavymetal_timbre  <- 
+heavymetal_song <- 
     get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
     compmus_align(bars, segments) %>% 
     select(bars) %>% unnest(bars) %>% 
@@ -222,59 +194,35 @@ heavymetal_timbre  <-
         pitches = 
             map(segments, 
                 compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
+                method = 'acentre', norm = 'manhattan')) %>% 
     mutate(
         timbre = 
             map(segments, 
                 compmus_summarise, timbre, 
                 method = 'mean'))
 
-p2 <-
-heavymetal_timbre %>% 
-    compmus_gather_timbre %>% 
+heavymetal_song_plot <- 
+    bind_rows(
+        heavymetal_song %>% compmus_self_similarity(pitches, 'aitchison') %>% mutate(d = d / max(d), type = "Chroma"),
+        heavymetal_song %>% compmus_self_similarity(timbre, 'euclidean') %>% mutate(d = d / max(d), type = "Timbre")) %>% 
     ggplot(
         aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = basis, 
-            fill = value)) + 
+            x = xstart + xduration / 2, 
+            width = xduration,
+            y = ystart + yduration / 2,
+            height = yduration,
+            fill = d)) + 
     geom_tile() +
-    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
-    scale_fill_viridis_c(option = 'E') +
+    coord_fixed() +
+    facet_wrap(~ type) +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
     theme_classic() +
-    ggtitle("Timbre")
+    labs(x = '', y = '') +
+    ggtitle("heavy metal by BMTH")
 
-grid.arrange(p1, p2, name = "heavy metal by BMTH", ncol = 2)
+# walk Chroma- and Cepstrogram
 
-ggplotly(p1)
-ggplotly(p2)
-
-# Chromagram walk
-
-walk_chroma <- 
-    get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
-    select(segments) %>% unnest(segments) %>% 
-    select(start, duration, pitches)
-
-p3 <-
-walk_chroma %>% 
-    mutate(pitches = map(pitches, compmus_normalise, 'chebyshev')) %>% 
-    compmus_gather_chroma %>% 
-    ggplot(
-        aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = pitch_class, 
-            fill = value)) + 
-    geom_tile() +
-    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
-    scale_fill_viridis_c(option = 'E') +
-    theme_classic() +
-    ggtitle("Chroma")
-
-# Cepstrogram walk
-
-walk_timbre <- 
+walk_song <- 
     get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
     compmus_align(bars, segments) %>% 
     select(bars) %>% unnest(bars) %>% 
@@ -282,38 +230,49 @@ walk_timbre <-
         pitches = 
             map(segments, 
                 compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
+                method = 'acentre', norm = 'manhattan')) %>% 
     mutate(
         timbre = 
             map(segments, 
                 compmus_summarise, timbre, 
                 method = 'mean'))
-p4 <-
-walk_timbre %>% 
-    compmus_gather_timbre %>% 
+
+walk_song_plot <- 
+    bind_rows(
+        walk_song %>% compmus_self_similarity(pitches, 'aitchison') %>% mutate(d = d / max(d), type = "Chroma"),
+        walk_song %>% compmus_self_similarity(timbre, 'euclidean') %>% mutate(d = d / max(d), type = "Timbre")) %>% 
     ggplot(
         aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = basis, 
-            fill = value)) + 
+            x = xstart + xduration / 2, 
+            width = xduration,
+            y = ystart + yduration / 2,
+            height = yduration,
+            fill = d)) + 
     geom_tile() +
-    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
-    scale_fill_viridis_c(option = 'E') +
+    coord_fixed() +
+    facet_wrap(~ type) +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
     theme_classic() +
-    ggtitle("Timbre")
-
-grid.arrange(p3, p4, name = "walk by Pantera", ncol = 2)
-
-ggplotly(p3)
-ggplotly(p4)
-
+    labs(x = '', y = '')+
+    ggtitle("walk by Pantera")
 
 ```
 
 
 ***
 
+Before we looked at the cepstrograms between 'heavy metal' by Bring Me The Horizon and 'walk' by Pantera. These graphs are Self-Similarity Martices based on timbre. Different than the cepstrograms, here we don't see as much differences between the two songs. The horizontal and vertical yellow lines cross about the same time for both songs, this is where in both songs the bridge comes in. In 'heavy metal' the bridge consist of a beatbox section where all the other instruments are dropped. The same happens in 'walk', but instead of a beatbox section, a guitar solo is added with drums. Beatboxing imitates instruments and my guess is that therefore the crossing yellow lines in 'heavy metal' are less clear than in 'walk', where there are just two instruments present in the bridge. 
+
+
+### Chromagrams? or Cepstrograms?
+
+```{r}
+
+
+    
+```
+
+***
 Here you can see two chromagrams and two ceptrograms. I've chosen two songs to compare to eachother, one song from BMTH and a metal song by a different band. The top ones are based on the song 'heavy metal' by BMTH, which is a song from their newest album *amo*. The reason why I chose this song is because of the song title. Like I stated before, BMTH was considered a metalband, but that is not necessary what people say about them nowadays. That's why it will be interessting to compare this song to a 'real' metal song and see if they are very different or similar. The other song is calles 'walk' by Pantara, an American groovemetalband who are known as trendsetters in their genre in the nineties. I've chosen this song to compare to 'heavy metal' because it is the most popular song in the Heavy Metal Spotify playlist. 
 
 
@@ -322,85 +281,13 @@ From a quick glance, the differences between these songs, regarding these graphs
 
 Looking at timbre, the difference between the songs are even more clear. 'heavy metal''s cepstrogram is almost totally yellow, with a few darker bandings in c04 and c06. 'walk' is the exact opposite. Blue is much more present and only c02 and c01 have a yellow tone. 
 
-### SSM
+
+
+### Are key changes more common in the past or present?
 
 ```{r}
 
-# heavy metal SSM timbre
-
-heavymetal_timbre  <- 
-    get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'mean'))
-
-heavymetal_timbre %>% 
-    compmus_self_similarity(timbre, 'cosine') %>% 
-    ggplot(
-        aes(
-            x = xstart + xduration / 2, 
-            width = xduration,
-            y = ystart + yduration / 2,
-            height = yduration,
-            fill = d)) + 
-    geom_tile() +
-    coord_fixed() +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_classic() +
-    labs(x = '', y = '')
-
-# walk SSM timbre
-
-walk_timbre <- 
-    get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'mean'))
-
-walk_timbre %>% 
-    compmus_self_similarity(timbre, 'cosine') %>% 
-    ggplot(
-        aes(
-            x = xstart + xduration / 2, 
-            width = xduration,
-            y = ystart + yduration / 2,
-            height = yduration,
-            fill = d)) + 
-    geom_tile() +
-    coord_fixed() +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_classic() +
-    labs(x = '', y = '')
-    
-```
-
-***
-
-Before we looked at the cepstrograms between 'heavy metal' by Bring Me The Horizon and 'walk' by Pantera. These graphs are Self-Similarity Martices based on timbre. Different than the cepstrograms, here we don't see as much differences between the two songs. The horizontal and vertical yellow lines cross about the same time for both songs, this is where in both songs the bridge comes in. In 'heavy metal' the bridge consist of a beatbox section where all the other instruments are dropped. The same happens in 'walk', but instead of a beatbox section, a guitar solo is added with drums. Beatboxing imitates instruments and my guess is that therefore the crossing yellow lines in 'heavy metal' are less clear than in 'walk', where there are just two instruments present in the bridge. 
-
-### Has Bring Me The Horizon changed the way they use keys throughout the years?
-
-```{r}
-
-# codes
+# Code
 
 circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
                                     
@@ -445,9 +332,9 @@ key_templates <-
         'B:maj' , circshift(major_key, 11),
         'D#:min', circshift(minor_key,  3))
 
+# Keygram for 'sugar honey ice & tea' 
 
-# Chordagram sugar from amo
-sugar_chord <- 
+sugar_key <- 
     get_tidy_audio_analysis('3Ddgh4ZwVIkLx0f4WeDFmo') %>% 
     compmus_align(sections, segments) %>% 
     select(sections) %>% unnest(sections) %>% 
@@ -458,7 +345,7 @@ sugar_chord <-
                 method = 'mean', norm = 'manhattan'))
 
 sugar_keygram <-
-sugar_chord  %>% 
+sugar_key  %>% 
     compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
     ggplot(
         aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
@@ -466,15 +353,11 @@ sugar_chord  %>%
     scale_fill_viridis_c(option = 'E', guide = 'none') +
     theme_minimal() +
     labs(x = 'Time (s)', y = '') +
-    ggtitle("sugar honey ice & tea")
+    ggtitle("'sugar honey ice & tea' from amo")
 
-ggplotly(sugar_keygram)
+# Keygram for Pray for Plagues 
 
-
-
-# chordagram pray for plagues from Count your Blessings
-
-pray_chord <- 
+pray_key <- 
     get_tidy_audio_analysis('0zYxfgyqypkG7rRwFqyisT') %>% 
     compmus_align(sections, segments) %>% 
     select(sections) %>% unnest(sections) %>% 
@@ -485,7 +368,7 @@ pray_chord <-
                 method = 'mean', norm = 'manhattan'))
 
 pray_keygram <-
-pray_chord  %>% 
+pray_key  %>% 
     compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
     ggplot(
         aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
@@ -493,9 +376,7 @@ pray_chord  %>%
     scale_fill_viridis_c(option = 'E', guide = 'none') +
     theme_minimal() +
     labs(x = 'Time (s)', y = '') +
-    ggtitle("Pray for Plagues")
-
-ggplotly(pray_keygram)
+    ggtitle("'Pray for Plagues' from Count your Blessings")
 
 
 ```
@@ -504,7 +385,7 @@ ggplotly(pray_keygram)
 
 On the left two keygrams are shown for two different songs by Bring Me The Horizon. The first is a key visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. While the bridge in  'sugar honey ice & tea' comes in a bit later than the one in 'Pray for Plagues', they both have one. Both bridges drop a lot of the instruments that can be heard in the rest of the song and slowing it down, making it include less chords at that moment. Also similar in both songs is the usage of the chords. The chords that are used the most are used throughout the whole song, so there is no modulation present. 
 
-### Which genre is the closest to a song? --> classification 
+### Which genre has a track most in common?
 
 ```{r}
 
@@ -530,13 +411,13 @@ indie <-
     add_audio_analysis
 
 genre <- 
-    rock %>% mutate(playlist = "Rock Classics") %>% 
+    rock %>% mutate(genre = "Rock") %>% 
     bind_rows(
-        punk %>% mutate(playlist = "Pure Pop Punk"),
-        pop %>% mutate(playlist = "Pop Internacional "),
-        indie %>% mutate(playlist = "Ultimate Indie"),
-        heavymetal %>% mutate(playlist = "Heavy Metal")) %>% 
-    mutate(playlist = factor(playlist)) %>% 
+        punk %>% mutate(genre = "Punk"),
+        pop %>% mutate(genre = "Pop"),
+        indie %>% mutate(genre = "Indie"),
+        heavymetal %>% mutate(genre = "Heavy Metal")) %>% 
+    mutate(genre = factor(genre)) %>% 
     mutate(
         segments = 
             map2(segments, key, compmus_c_transpose)) %>% 
@@ -554,8 +435,8 @@ genre <-
     mutate_at(vars(pitches, timbre), map, bind_rows) %>% 
     unnest(pitches, timbre)
 
-genre_class <- 
-    recipe(playlist ~
+genre_juice <- 
+    recipe(genre ~
                danceability +
                energy +
                loudness +
@@ -577,36 +458,20 @@ genre_class <-
     # step_range(all_predictors()) %>% 
     prep(genre) %>% 
     juice
-
-genre_cv <- genre_class %>% vfold_cv(5)
-
+genre_cv <- genre_juice %>% vfold_cv(10)
 genre_knn <- nearest_neighbor(neighbors = 1) %>% set_engine('kknn')
-predict_knn <- function(split)
-    fit(genre_knn, playlist ~ ., data = analysis(split)) %>% 
-    predict(assessment(split), type = 'class') %>%
-    bind_cols(assessment(split))
-
 predict_knn_reduced <- function(split)
     fit(
         genre_knn, 
-        playlist ~ c01 + c11 + liveness + energy + acousticness, 
+        genre ~ c01 + c02 + energy + danceability + tempo, 
         data = analysis(split)) %>% 
     predict(assessment(split), type = 'class') %>%
     bind_cols(assessment(split))
 genre_cv %>% 
     mutate(pred = map(splits, predict_knn_reduced)) %>% unnest(pred) %>% 
-    metric_set(accuracy, kap, j_index)(truth = playlist, estimate = .pred_class)
-
-genre_cv %>% 
-    mutate(pred = map(splits, predict_knn_reduced)) %>% unnest(pred) %>% 
-    conf_mat(truth = playlist, estimate = .pred_class) %>% 
+    conf_mat(truth = genre, estimate = .pred_class) %>% 
     autoplot(type = 'mosaic')
 
-genre %>%
-    ggplot(aes(x = c01, y = c11, colour = playlist, size = liveness)) +
-    geom_point(alpha = 0.8) +
-    scale_color_brewer(type = 'qual', palette = 'Accent') +
-    labs(x = 'Timbre Component 1', y = 'Timbre Component 11', size = 'Liveness', colour = 'Playlist')
 
 ```
 
@@ -716,3 +581,47 @@ heatmaply(
     dist_method = 'euclidean')
 
 ```
+***
+
+### Conclusion 
+
+By comparing the different albums of BMTH with eachother, it is clear that their newest album *amo* is different than the rest. The songs score higher on valence than the songs from older albums, which means they sound more 'positive'. 
+
+When looking at the structure of songs from *amo* they are different from.... and similar in a way.....
+
+It looks like a lot of newer songs cluster together.
+
+All of these visualizations show that *amo* is clearly different than the older albums and is pulling away from the heavy metal image there was before. When looking at the visualizations though, the differences aren't that different. A lot of songs still have similar elements in them, but are just mixed with a lot of other genres. 
+
+I think, BMTH shows a whole different side of them. They can do more than bang their heads and get people involved in moshpits. They are multitalented in regards of musical genres and are exploring wiht them. The reaction of fans might be scaddered, but the new 'image' might be an oppertunity to expand the fanbase. 
+
+***
+
+### Appendix 
+
+In the 15 years Bring Me The Horizon has been an official band, they have released 6 albums. Below you'll see a table with the album names, the year of their release and the number of songs on the album. 
+
+
+| Album Name                                                                        | Year of release | Number of songs |
+|-----------------------------------------------------------------------------------|:---------------:|:---------------:|
+| Count your Blessings                                                              |             2006|               10|
+| Suicide Season                                                                    |             2008|               10|
+| There is a Hell Believe Me I've Seen It. There is a Heaven Let's Keep It a Secret |             2010|               12|
+| Sempiternal                                                                       |             2013|               13|
+| That's the Spirit                                                                 |             2015|               11|
+| amo                                                                               |             2019|               13|
+
+
+
+Below you'll see all the Spotify playlists I have used to summarize a specific genre in general. 
+
+
+
+| Playlist Name       | Number of songs | 
+|---------------------|:---------------:|
+| Heavy Metal         |               60|               
+| Pop Internacional   |               60|               
+| Pure Pop Punk       |               50|               
+| Rock Classics       |              150|             
+| Ultimate Indie      |               62|               
+                                                                     
