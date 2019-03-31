@@ -1,7 +1,7 @@
 ---
 title: "Portfolio Computational Musicology"
 author: "Chayenne van den Hazel"
-date: "3 maart 2019"
+date: "31th of March 2019"
 output: 
     flexdashboard::flex_dashboard:
         storyboard: true
@@ -26,7 +26,7 @@ source('spotify.R')
 
 ***
 
-The metalband Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The reaction on the new album is divided. The sound of this album is totally different than fans are used to hearing from them. It feels like they are stepping out of their 'heavy metal' image and taking on a new one. Besides that, it is said that the album is not cohesive because of the many styles of music being incorporated. One song called 'heavy metal' of BMTH's new album talks about their change in genre and the reaction of their fans:
+The metalband Bring Me The Horizon released their sixth album *amo* on the 25th of January 2019. The reaction on the new album is divided. The sound of this album is totally different than fans are used to hearing from them. It feels like they are stepping out of their 'heavy metal' fase and into a new one. Besides that, it is said that the album is not cohesive because of the many styles of music being incorporated. One song called 'heavy metal' of their new album talks about their change in genre and the reaction of their fans:
 
 
 *"And I keep picking petals
@@ -34,22 +34,25 @@ I'm afraid you don't love me anymore
 'Cause a kid on the 'gram in a Black Dahlia tank
 Says it ain't heavy metal"*
 
+**Research Question**
 
-I want to know if their new album is really that different from the other albums and what the difference is exactly. Is it true that they are changing their image and what are they changing it to? My research question is therefore: Is Bring Me The Horizon creating a new musical image and what is this image exactly?
+So, is the new albuma actually significantly different than the older ones? If yes, what is so different about it? Which genre could be applied to the new album instead of Heavy Metal? My research question is therefore: Is Bring Me The Horizon creating a new musical image and what is this image exactly?
+
+**Method**
+
+To anwer my research question I'm using a handfull of different **Spofity playlists** to compare their features. My main corpus is obviously BMTH's newest album *amo*. Besides that I'm also looking into all their **old albums**: *Count Your Blessings*, *Suidice Season*, *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret*, *Sempiternal* and *That's the Spirit*. To get the Spotify features for the albums, I've make seperate playlist for each. With the help of these albums I can compare the new album to the old ones and see what the differences and similarities are. 
 
 
-To anwer my research question I'm using a handfull of different Spofity playlists to compare their features. My main corpus is obviously BMTH's newest album *amo*. Besides that I'm also looking into all their old albums: *Count Your Blessings*, *Suidice Season*, *There is a Hell Believe Me I've Seen it. There is a Heaven Let's Keep it a Secret*, *Sempiternal* and *That's the Spirit*. To get the Spotify features for the albums, I've make seperate playlist for each. With the help of these albums I can compare the new album to their old ones and see what the differences and similarities are. 
+This will hopefully answer the first part of my research question, but more is needed to answer the second. Different **musical genres** can help me with that. I'm going to use different Spotify playlists to compare them to the albums and see which genre fits the best per album for the newest album. The playlists I'm using for this are: *Heavy Metal*, *Pop Internacional*, *Pure Pop Punk*, *Rock Classics* and *Ultimate Indie*. 
 
 
-This will hopefully answer the first part of my research question, but more is needed to answer the second. Different musical genres can help me figure out what it is that BMTH is changing their image into. I'm going to use different Spotify playlists to compare them to the albums and see which genre fits the best per album. The playlist I'm using for this are: Rock Classics, Pure Pop Punk, Heavy Metal, Pop Internacional and Ultimate Indie. 
-
-
-By combining these two elements, the BMTH albums and different genre playlist, I hope to answer my research question. For more information about the albums, the playlists being used and audio samples: see the Appendix. 
+By combining these two elements, the BMTH albums and different genre playlist, I hope to answer my research question. For more information about the albums and the playlists being used: see the Appendix. 
 
 
 ### Is Bring Me The Horizon's newest album really that different from the others?
 
 ```{r}
+
 # Data Spotify features 
 
 blessings <- get_playlist_audio_features('faaske', '3q4J2ymyPxuRH49FUexRDA')
@@ -111,6 +114,311 @@ ve_album <- albums %>%
 
 ggplotly(ve_album)
 
+```
+
+***
+
+**What Do The Spotify Features Tell Us?**
+
+In this graph, the Spotify features **valence** and **energy** are plotted against eachother for all the albums Bring Me The Horizon has made and the **loudness** of the songs is shown by the size of the dots. Valence and energy are measured on a scale from 0 to 1. Valence shows how positive a track is, so with a score of 0 a track is really negative and a really positivie track will score 1. The general distribution for valence is fairly average, most tracks score between 0.4 and 0.6. The intensity and activity of a track is shown by the energy feature. Spotify says that energetic tracks, so tracks that score high on the scale, are fast, loud and noisy like death metal. When looking at the distribution for this feature, most tracks have a score of 0.8. Loudness has a different scale than the other features. It is measured in decibles (dB) and typically ranges from -60 to 0 dB. In general, the loudness of a track is measured between -10 and -5 on average. 
+
+**Spofity Features and Bring Me The Horizon**
+
+As can be seen in the graph on the left, BMTH's music mostly scores **below 0.5 on valence** and in general scores really **high on energy**. An interesting find in this graph is the shift in valence between the first and last few albums. The first album *Count your blessings* scores **low on valence**, like most of the BMTH songs in general. But looking at the last two albums *That's the Spirit* and *amo*, it can be seen that those songs score the **highest on valence**. Therefore it can be said that the outliers on the valence scale for all BMTH songs, are actually the songs of these last two albums. When looking at the energy scale, there are three main outliers: a song called 'Memorial' from *There is a Hell...*, 'i apologise if you feel something' from *amo* and 'Fifteen Fantoms, Counting' from *Count your Blessings*. 'Memorial' and 'Fifteen Fantoms, Counting' are both **slow instrumental songs** and that's the reason they score lower on energy than the rest of the songs. 'i apologise if you feel somthing' is not totally instrumental, but it is a slower song compared to the rest of the album. This song is also used as the intro to Bring Me The Horizon's concert, which is not surprising because it sounds very mysterious. 
+
+
+Loudness is also an interessting feature to look into. The legend shows that *Sempiternal* scores the **hightest** and the three older albums score the lowest out of all 6 albums. This is a surprise because the first few albums are definately considered metal and I would think that those songs would score high on the loudness scale. 
+
+
+### Are key changes more common in the past or present Bring Me The Horizon?
+
+```{r}
+
+# Code
+
+circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
+                                    
+    # C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B 
+major_chord <- 
+    c(1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
+minor_chord <- 
+    c(1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
+seventh_chord <- 
+    c(1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
+
+major_key <- 
+    c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
+minor_key <-
+    c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
+
+key_templates <-
+    tribble(
+        ~name    , ~template,
+        'Gb:maj', circshift(major_key,  6),
+        'Bb:min', circshift(minor_key, 10),
+        'Db:maj', circshift(major_key,  1),
+        'F:min' , circshift(minor_key,  5),
+        'Ab:maj', circshift(major_key,  8),
+        'C:min' , circshift(minor_key,  0),
+        'Eb:maj', circshift(major_key,  3),
+        'G:min' , circshift(minor_key,  7),
+        'Bb:maj', circshift(major_key, 10),
+        'D:min' , circshift(minor_key,  2),
+        'F:maj' , circshift(major_key,  5),
+        'A:min' , circshift(minor_key,  9),
+        'C:maj' , circshift(major_key,  0),
+        'E:min' , circshift(minor_key,  4),
+        'G:maj' , circshift(major_key,  7),
+        'B:min' , circshift(minor_key, 11),
+        'D:maj' , circshift(major_key,  2),
+        'F#:min', circshift(minor_key,  6),
+        'A:maj' , circshift(major_key,  9),
+        'C#:min', circshift(minor_key,  1),
+        'E:maj' , circshift(major_key,  4),
+        'G#:min', circshift(minor_key,  8),
+        'B:maj' , circshift(major_key, 11),
+        'D#:min', circshift(minor_key,  3))
+
+# Keygram for 'sugar honey ice & tea' 
+
+sugar <- 
+    get_tidy_audio_analysis('3Ddgh4ZwVIkLx0f4WeDFmo') %>% 
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
+
+sugar_key <-
+sugar %>% 
+    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
+    ggplot(
+        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
+    geom_tile() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_minimal() +
+    labs(x = 'Time (s)', y = '')+
+    ggtitle("sugar honey ice & tea")
+
+ggplotly(sugar_key)
+
+# Keygram Pray for Plagues
+
+pray <- 
+    get_tidy_audio_analysis('0zYxfgyqypkG7rRwFqyisT') %>% 
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
+
+pray_key <-
+pray %>% 
+    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
+    ggplot(
+        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
+    geom_tile() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_minimal() +
+    labs(x = 'Time (s)', y = '')+
+    ggtitle("Pray for Plagues")
+
+
+ggplotly(pray_key)
+
+```
+
+***
+
+On the left two keygrams are shown for two different songs by Bring Me The Horizon. The first is a key visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. 
+
+**sugar honey ice & tea**
+
+Throughout the whole song, 'sugar honey ice & tea' has the same key. F minor, C minor, F major and C major are clearly the most present throughout the whole song. This means that BMTH didn't add a modulation in their song. The song can be divided into 10 parts, regarding the key. In the first few seconds, a lot more keys are present. This exact moment is the intro to the song, which makes sense with the amount of keys present at that moment. After that the banding shows a verse, chorus, verse and a chorus with an extention before it. Then there is a change, the bridge. Most instruments are dropped and even the vocals for a few seconds. After that the song slowly builds up again, which can be seen in the keygram before 200 seconds. The chorus comes in again, with an outro where a lot of the instruments are dropped again. 
+
+**Pray for Plagues**
+
+Looking at the keygram for 'Pray for Plagues', the keys used are even more clear than those in 'sugar honey ice & tea'. Again C minor is clearly present in this song, but this time Gb major, B minor, F# minor and C# minor are added. Again, no modulation is added in this song and sections can be visualized. The intro includes less keys, just like the other song. When listening to this song, it sounds typically 'heavy metal' with multiple electric guitars and the rough vocals. The melodies in the song are pretty similar throughout the song or will repeat themselves multiple times. That is why the banding might be clearer than 'suger honey ice & tea'. This song also includes a bridge, but it is earlier in the song. The melodies being used in the bridge are totally different than anything we heared before in the song. It is a guitar solo with no vocals at all. It is clearly a different thing than the rest of the song and that can also be seen in the keygram. The end of the song is just repeating what has been played before, with a few changes and an outro. 
+
+**Comparison**
+
+When looking at these two keygrams, I don't see much difference. Both have an intro and outro, they have a bridge with less instruments and have the same kind of build with verses and chorus. Also, neither modulate in the song and so stay within the same key throughout the song. The only big difference between the songs is the repeating of melodies. I feel like 'Pray for Plagues' uses less variations than 'sugar honey ice & tea' when looking at the melodies. 
+
+
+### Do songs from the same album cluster together?
+
+```{r}
+
+# Clustering
+
+bmth_songs <- 
+    get_playlist_audio_features('faaske', '6ya8YDyX7ldJsG1OtYWhl4') %>% 
+    add_audio_analysis %>% 
+    mutate(
+        segments = 
+            map2(segments, key, compmus_c_transpose)) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'),
+        timbre =
+            map(
+                segments,
+                compmus_summarise, timbre,
+                method = 'mean')) %>% 
+    mutate(pitches = map(pitches, compmus_normalise, 'clr')) %>% 
+    mutate_at(vars(pitches, timbre), map, bind_rows) %>% 
+    unnest(pitches, timbre)
+
+# Pre-Processing 
+
+bmth_songs_juice <- 
+    recipe(track_name ~
+               danceability +
+               energy +
+               loudness +
+               speechiness +
+               acousticness +
+               instrumentalness +
+               liveness +
+               valence +
+               tempo +
+               duration_ms +
+               C + `C#|Db` + D + `D#|Eb` +
+               E + `F` + `F#|Gb` + G +
+               `G#|Ab` + A + `A#|Bb` + B +
+               c01 + c02 + c03 + c04 + c05 + c06 +
+               c07 + c08 + c09 + c10 + c11 + c12,
+           data = bmth_songs) %>% 
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    # step_range(all_predictors()) %>% 
+    prep(bmth_songs %>% mutate(track_name = str_trunc(track_name, 20))) %>% 
+    juice %>% 
+    column_to_rownames('track_name')
+
+# Computing distances
+
+bmth_dist <- dist(bmth_songs_juice, method = 'euclidean')
+
+# Hierarchical clustering
+
+protoclust(bmth_dist) %>% dendro_data %>% ggdendrogram
+
+
+```
+
+
+*** 
+
+This picture shows the 69 Bring Me The Horizon songs from all 6 albums being clustered together. By looking at it we can devide the songs into four main clusters:
+1) From 'Memorial' till 'The Sadness Will Never End'
+2) From 'wonderful life' till 'Sleep With One Eye Open'
+3) From 'Don't Go' till 'Liquor & Love Lost'
+4) From 'ouch' till 'Run' 
+
+Here you can see a list with the cluster number and how many songs are in that cluster: 
+
+
+| Cluster   | Number of songs | 
+|-----------|:---------------:|
+| 1         |               12|               
+| 2         |               19|               
+| 3         |               17|               
+| 4         |               21|             
+            
+
+**First Cluster**
+
+In the first cluster the first three songs are actually the outliers that I talked about in the second page of this portfolio. These songs are a lot slower, softer and are instrumental (besides 'i apologise if you feel something', this one does include vocals). They have a totally different feel to them in comparison to the rest of the songs, which is why it makes sense that they don't really belong in a clear cluster. Below you'll see a table with the 6 albums and how many songs of that album are in this cluster. 
+
+| Album                 | Number of songs | 
+|-----------------------|:---------------:|
+| Count your Blessings  |                2|               
+| Suicide Season        |                5|               
+| There is a Hell       |                2|               
+| Sempiternal           |                2|             
+| That's the Spirit     |                0|     
+| amo                   |                2|
+                                           
+
+**Second Cluster**
+
+The table below shows that *Sempiternal* has the most songs in the second cluster. For *Count your Blessings* this section includes the majority of their songs as well. When looking at the numbers, this cluster doesn't give an indication that songs from the same album cluster together. By listering to the songs I can understand why these are clusterd together. They have a clear electric guitar sond and have approximately the same tempo. Also, the vocals on these songs are very strong. 
+
+| Album                 | Number of songs | 
+|-----------------------|:---------------:|
+| Count your Blessings  |                5|               
+| Suicide Season        |                3|               
+| There is a Hell       |                2|               
+| Sempiternal           |                6|             
+| That's the Spirit     |                0|     
+| amo                   |                2|
+   
+
+**Third Cluster**
+
+When looking at the third cluster, *There is a Hell Believe Me I've Seen It. There is a Heaven Let's Keep it a Secret* stands out with 8 songs out of 17 in this section. All the other albums except for *That's the Spirit* also have a few songs in this section. Like the second cluster, by listening to the songs it becomes clear why these songs are clustered together. It used the same kind of guitar sounds as the last cluster, but the tempo is turned up a lot. As well as the second cluster, these songs are what people would generally call **Heavy Metal**. 
+
+| Album                 | Number of songs | 
+|-----------------------|:---------------:|
+| Count your Blessings  |                3|               
+| Suicide Season        |                2|               
+| There is a Hell       |                8|               
+| Sempiternal           |                2|             
+| That's the Spirit     |                0|     
+| amo                   |                2|
+
+**Fourth Cluster**
+
+The fourth cluster is made up of songs from the last three albums (*Sempiternal*, *That's the Spirit* and *amo*). All the songs from *That's the Spirit* are in this 4th section and the majority of *amo* as well, but for *Sempiternal* this is not the section with the most songs in them. What brings these songs together in the clusters might be the vocals for a change. It feels like the songs is build around the vocals and therefore the vocals are more 'important' than the instrumental music. The vocals are less 'heavy metal' and some people might say that these songs are actually being sung instead of 'screamed'. 
+
+| Album                 | Number of songs | 
+|-----------------------|:---------------:|
+| Count your Blessings  |                0|               
+| Suicide Season        |                0|               
+| There is a Hell       |                0|               
+| Sempiternal           |                3|             
+| That's the Spirit     |               11|     
+| amo                   |                7|
+
+
+**Summary**
+
+In general, the most recent albums are clustered together in one section and the older albums are clustered in others. This is very interessting, because it shows that the newer albums are different than the older ones and in such a manner that they (in general) won't cluster with eachother until the very end of the graph. 
+
+
+### How do the clusters show for different features?
+
+```{r}
+
+# Heatmap
+
+heatmaply(
+    bmth_songs_juice,
+    hclustfun = hclust,
+    # hclustfun = protoclust,
+    # Comment out the hclust_method line when using protoclust.
+    hclust_method = 'average',
+    dist_method = 'euclidean')
+
+```
+
+***
+
+This headmap shows the same clustering as before, but this time with different features to compare with. 
+
+The features instrumental and acousticness are very interssting. In the middle it shows a very smooth line, while below and above it is not as smooth. These are actually **the fourth cluster** with the songs from the last 3 albums and the first few songs from **the first cluster**. Like I said before, the first few songs of the first cluster are instrumental and therefore score high on this feature. For the same songs a darker patch can be seen for loudness, c01 and enery and a lighter patch from instrumentalness till D#/Eb. Besides those songs, no big patches stand out. Everyting is pretty much scattered around, which tells me that there are no songs (besides the ones I talk about above) that stand out between all of the BMTH songs. 
+
+### How do genres differ in their positivity and their intencity levels?
+
+```{r}
+
 # Genres
 
 bmth <- get_playlist_audio_features('faaske', '6ya8YDyX7ldJsG1OtYWhl4')
@@ -169,221 +477,26 @@ ggplotly(ve_genre)
 
 ```
 
-***
-
-In this graph, the Spotify features 'Valence' and 'Energy' are plotted against eachother for all the albums Bring Me The Horizon has made and the loudness of the songs is shown by the size of the dots. Valence and energy are measured on a scale from 0 to 1. Valence shows how positive a track is, so with a score of 0 a track is really negative and a really positivie track will store 1. The general distribution for valence is fairly average, so most tracks score between 0.4 and 0.6. The intensity and activity of a track is shown by the energy feature. Spotify says that energetic tracks, so tracks that score high on the scale, are fast, loud and noisy like death metal. When looking at the distribution for this feature, most tracks have a score of 0.8. Loudness has a different scale than the other features. It is measured in decibles (dB) and typically ranges from -60 to 0 dB. In general, the loudness of a track is measured between -10 and -5 on average. 
-
-
-As can be seen in the graph on the left, BMTH's music mostly scores below 0.5 on valence and in general scores really high on energy. An interesting finding in this graph is the shift in valence between the first and last few albums. The first album *Count your blessings* scores low on valence, like most of their songs in general. But looking at the last two albums *That's the Spirit* and *amo*, it can be seen that those songs score the highest on valence. Therefore it can be said that the outliers on the valence scale for all BMTH songs, are actually the songs of these last two albums. When looking at the energy scale, there are three main outliers: a song called 'Memorial' from *There is a Hell...*, 'i apologise if you feel something' from *amo* and 'Fifteen Fantoms, Counting' from *Count your Blessings*. 'Memorial' and 'Fifteen Fantoms, Counting' are both slow instrumental songs and that's the reason they score lower on energy than the rest of the songs. 'i apologise if you feel somthing' is not totally instrumental, but it is a slower song compared to the rest of the album. This songs is also used as the intro to Bring Me The Horizon's concert, which is not surprising because it sounds very mysterious. 
-
-
-Loudness is also an interessting feature to look into. The legend shows that *Sempiternal* scores the hightest and the three older albums score the lowest out of all 6 albums. This is a surprise because the first few albums are definatly considered metal and I would think that those songs would score high on the loudness scale. 
-
-  
-### An structural analysis of 'heavy metal' and Heavy Metal
-
-```{r}
-
-# heavy metal Chroma- and Cepstrogram
-
-heavymetal_song <- 
-    get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'acentre', norm = 'manhattan')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'mean'))
-
-heavymetal_song_plot <- 
-    bind_rows(
-        heavymetal_song %>% compmus_self_similarity(pitches, 'aitchison') %>% mutate(d = d / max(d), type = "Chroma"),
-        heavymetal_song %>% compmus_self_similarity(timbre, 'euclidean') %>% mutate(d = d / max(d), type = "Timbre")) %>% 
-    ggplot(
-        aes(
-            x = xstart + xduration / 2, 
-            width = xduration,
-            y = ystart + yduration / 2,
-            height = yduration,
-            fill = d)) + 
-    geom_tile() +
-    coord_fixed() +
-    facet_wrap(~ type) +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_classic() +
-    labs(x = '', y = '') +
-    ggtitle("heavy metal by BMTH")
-
-# walk Chroma- and Cepstrogram
-
-walk_song <- 
-    get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'acentre', norm = 'manhattan')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'mean'))
-
-walk_song_plot <- 
-    bind_rows(
-        walk_song %>% compmus_self_similarity(pitches, 'aitchison') %>% mutate(d = d / max(d), type = "Chroma"),
-        walk_song %>% compmus_self_similarity(timbre, 'euclidean') %>% mutate(d = d / max(d), type = "Timbre")) %>% 
-    ggplot(
-        aes(
-            x = xstart + xduration / 2, 
-            width = xduration,
-            y = ystart + yduration / 2,
-            height = yduration,
-            fill = d)) + 
-    geom_tile() +
-    coord_fixed() +
-    facet_wrap(~ type) +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_classic() +
-    labs(x = '', y = '')+
-    ggtitle("walk by Pantera")
-
-```
-
 
 ***
 
-Before we looked at the cepstrograms between 'heavy metal' by Bring Me The Horizon and 'walk' by Pantera. These graphs are Self-Similarity Martices based on timbre. Different than the cepstrograms, here we don't see as much differences between the two songs. The horizontal and vertical yellow lines cross about the same time for both songs, this is where in both songs the bridge comes in. In 'heavy metal' the bridge consist of a beatbox section where all the other instruments are dropped. The same happens in 'walk', but instead of a beatbox section, a guitar solo is added with drums. Beatboxing imitates instruments and my guess is that therefore the crossing yellow lines in 'heavy metal' are less clear than in 'walk', where there are just two instruments present in the bridge. 
+To start of the next section of this portfolio, let's look at the distribution of genres on the energy/valence/loudness plot. In general, the genres score high on energy and average to low on valence. 
 
+**Energy**
 
-### Chromagrams? or Cepstrograms?
+Like I said, in general all the genres score high on energy. The ones that stand out are: Heavy Metal and Punk. Both of those, but especially Heavy Metal, score the highest (1.0 or just below). Another genre that scores high on energy is Rock, but also has a few songs that score a lot lower, below 0.5 even. It makes sense that these genres score high on this feature, because they usually have a fast tempo and use a lot of (real) instruments. The genre that scores the lowest is Indie, although it also has a large amount that scores between 0.5 and 0.8. Pop is actually in the middle of everything. It can be said that Pop has an average energy level compared to other genres. 
 
-```{r}
+**Valence**
 
+For genres, the majority is gathered around the middle for this feature, but tend to score higher rather than lower. To my surprise, Rock scores the highest for valence, which means rock songs are very positive. Punk tends to stick around the middle and Heavy Metal scores a lot lower than the other genres. The other genres are spread out pretty evenly, from low to high. 
 
-    
-```
+**Loudness**
 
-***
-Here you can see two chromagrams and two ceptrograms. I've chosen two songs to compare to eachother, one song from BMTH and a metal song by a different band. The top ones are based on the song 'heavy metal' by BMTH, which is a song from their newest album *amo*. The reason why I chose this song is because of the song title. Like I stated before, BMTH was considered a metalband, but that is not necessary what people say about them nowadays. That's why it will be interessting to compare this song to a 'real' metal song and see if they are very different or similar. The other song is calles 'walk' by Pantara, an American groovemetalband who are known as trendsetters in their genre in the nineties. I've chosen this song to compare to 'heavy metal' because it is the most popular song in the Heavy Metal Spotify playlist. 
+From the 5 genres, Punk is the loudest and Indie and Rock are the quietest. Again, Rock takes me by surprise. From my own experience I know Rock is usually a loud genre, but the songs in this playlist might not be. 
 
+**Comparison to Bring Me The Horizon**
 
-From a quick glance, the differences between these songs, regarding these graphs, can immidately be seen. The chromagrams for the songs are almost the opposite of eachother. 
-
-
-Looking at timbre, the difference between the songs are even more clear. 'heavy metal''s cepstrogram is almost totally yellow, with a few darker bandings in c04 and c06. 'walk' is the exact opposite. Blue is much more present and only c02 and c01 have a yellow tone. 
-
-
-
-### Are key changes more common in the past or present?
-
-```{r}
-
-# Code
-
-circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
-                                    
-    # C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B 
-major_chord <- 
-    c(1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
-minor_chord <- 
-    c(1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
-seventh_chord <- 
-    c(1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
-
-major_key <- 
-    c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
-minor_key <-
-    c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
-
-key_templates <-
-    tribble(
-        ~name    , ~template,
-        'Gb:maj', circshift(major_key,  6),
-        'Bb:min', circshift(minor_key, 10),
-        'Db:maj', circshift(major_key,  1),
-        'F:min' , circshift(minor_key,  5),
-        'Ab:maj', circshift(major_key,  8),
-        'C:min' , circshift(minor_key,  0),
-        'Eb:maj', circshift(major_key,  3),
-        'G:min' , circshift(minor_key,  7),
-        'Bb:maj', circshift(major_key, 10),
-        'D:min' , circshift(minor_key,  2),
-        'F:maj' , circshift(major_key,  5),
-        'A:min' , circshift(minor_key,  9),
-        'C:maj' , circshift(major_key,  0),
-        'E:min' , circshift(minor_key,  4),
-        'G:maj' , circshift(major_key,  7),
-        'B:min' , circshift(minor_key, 11),
-        'D:maj' , circshift(major_key,  2),
-        'F#:min', circshift(minor_key,  6),
-        'A:maj' , circshift(major_key,  9),
-        'C#:min', circshift(minor_key,  1),
-        'E:maj' , circshift(major_key,  4),
-        'G#:min', circshift(minor_key,  8),
-        'B:maj' , circshift(major_key, 11),
-        'D#:min', circshift(minor_key,  3))
-
-# Keygram for 'sugar honey ice & tea' 
-
-sugar_key <- 
-    get_tidy_audio_analysis('3Ddgh4ZwVIkLx0f4WeDFmo') %>% 
-    compmus_align(sections, segments) %>% 
-    select(sections) %>% unnest(sections) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'mean', norm = 'manhattan'))
-
-sugar_keygram <-
-sugar_key  %>% 
-    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
-    ggplot(
-        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
-    geom_tile() +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_minimal() +
-    labs(x = 'Time (s)', y = '') +
-    ggtitle("'sugar honey ice & tea' from amo")
-
-# Keygram for Pray for Plagues 
-
-pray_key <- 
-    get_tidy_audio_analysis('0zYxfgyqypkG7rRwFqyisT') %>% 
-    compmus_align(sections, segments) %>% 
-    select(sections) %>% unnest(sections) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'mean', norm = 'manhattan'))
-
-pray_keygram <-
-pray_key  %>% 
-    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
-    ggplot(
-        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
-    geom_tile() +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_minimal() +
-    labs(x = 'Time (s)', y = '') +
-    ggtitle("'Pray for Plagues' from Count your Blessings")
-
-
-```
-
-***
-
-On the left two keygrams are shown for two different songs by Bring Me The Horizon. The first is a key visualization of the most popular song from *amo* 'sugar honey ice & tea' and the second one is the most popular song from *Count your Blessings* 'Pray for Plagues'. While the bridge in  'sugar honey ice & tea' comes in a bit later than the one in 'Pray for Plagues', they both have one. Both bridges drop a lot of the instruments that can be heard in the rest of the song and slowing it down, making it include less chords at that moment. Also similar in both songs is the usage of the chords. The chords that are used the most are used throughout the whole song, so there is no modulation present. 
+When looking at this plot and the other one for the BMTH albums, things can be noticed. In general, the albums scored high on energy and low on valence. The same can be seen for the Heavy Metal genre, which mostly gathers in the left upper corner as well. I explained in the album plot that the three newest albums tend to score higher on valence than the older ones. When comparing that to this graph, Punk and Rock are the genres that score higher on this scale as well. This gives an indication that the newer albums might fit the genre Punk and/or Rock better. 
 
 ### Which genre has a track most in common?
 
@@ -475,127 +588,239 @@ genre_cv %>%
 
 ```
 
-
-
 ***
 
-I want to use a classifier to find out which genre fits a song the best. If, for example, a song from *Count your Blessings* is closest to the heavy metal genre and a song from *amo* is closest to pop, this will give a good argument in favor of my research question. I have struggled a lot with this weeks homework, because I wasn't able to attend the class. I was able to make the visualizations on the right by using the compmus document, but I wasn't able to make them how I wanted it to and I had trouble reading them. I'm going to work on this for my final portfolio. 
+The picture on the left is a mosaic of the the 5 different genres I've used in this corpus. 
 
-### Clustering
+Continuing from the last page, a classififier can be a handy tool. Training a classifier to recognize different genres and showing what genre fits best to a song, can definately be used to answer my research question If, for example, a song from *Count your Blessings* is closest to Heavy Metal and a song from *amo* is closest to Pop, it will give a strong argument. 
+
+
+### An structural analysis of 'heavy metal' and Heavy Metal based on pitch
 
 ```{r}
 
-# Clustering
-
-bmth_songs <- 
-    get_playlist_audio_features('faaske', '6ya8YDyX7ldJsG1OtYWhl4') %>% 
-    add_audio_analysis %>% 
-    mutate(
-        segments = 
-            map2(segments, key, compmus_c_transpose)) %>% 
+heavymetal_song <- 
+    get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
     mutate(
         pitches = 
             map(segments, 
                 compmus_summarise, pitches, 
-                method = 'mean', norm = 'manhattan'),
-        timbre =
-            map(
-                segments,
-                compmus_summarise, timbre,
-                method = 'mean')) %>% 
-    mutate(pitches = map(pitches, compmus_normalise, 'clr')) %>% 
-    mutate_at(vars(pitches, timbre), map, bind_rows) %>% 
-    unnest(pitches, timbre)
+                method = 'acentre', norm = 'manhattan')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'mean'))
 
-# Pre-Processing 
+walk_song <- 
+    get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'acentre', norm = 'manhattan')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'mean'))
 
-bmth_songs_juice <- 
-    recipe(track_name ~
-               danceability +
-               energy +
-               loudness +
-               speechiness +
-               acousticness +
-               instrumentalness +
-               liveness +
-               valence +
-               tempo +
-               duration_ms +
-               C + `C#|Db` + D + `D#|Eb` +
-               E + `F` + `F#|Gb` + G +
-               `G#|Ab` + A + `A#|Bb` + B +
-               c01 + c02 + c03 + c04 + c05 + c06 +
-               c07 + c08 + c09 + c10 + c11 + c12,
-           data = bmth_songs) %>% 
-    step_center(all_predictors()) %>%
-    step_scale(all_predictors()) %>%
-    # step_range(all_predictors()) %>% 
-    prep(bmth_songs %>% mutate(track_name = str_trunc(track_name, 20))) %>% 
-    juice %>% 
-    column_to_rownames('track_name')
 
-# Computing distances
+songs_chroma <- 
+    bind_rows(
+        heavymetal_song %>% compmus_self_similarity(pitches, 'aitchison') %>% mutate(d = d / max(d), song = "heavy metal"),
+        walk_song %>% compmus_self_similarity(pitches, 'aitchison') %>% mutate(d = d / max(d), song = "walk")) %>% 
+    ggplot(
+        aes(
+            x = xstart + xduration / 2, 
+            width = xduration,
+            y = ystart + yduration / 2,
+            height = yduration,
+            fill = d)) + 
+    geom_tile() +
+    coord_fixed() +
+    facet_wrap(~ song) +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_classic() +
+    labs(x = '', y = '')
 
-bmth_dist <- dist(bmth_songs_juice, method = 'euclidean')
+ggplotly(songs_chroma)
 
-# Hierarchical clustering
-
-protoclust(bmth_dist) %>% dendro_data %>% ggdendrogram
 
 
 ```
 
 
-*** 
+***
 
-On the first picture we see a clustering of the 69 Bring Me The Horizon songs from all 6 albums. By looking at it we can devide the songs into four sections:
-1) From 'Memorial' till 'The Sadness Will Never End'
-2) From 'wonderful life' till 'Sleep With One Eye Open'
-3) From 'Don't Go' till 'Liquor & Love Lost'
-4) From 'ouch' till 'Run' 
-The first section can be considered as 'the rest' and so I will focus on the other three sections. 
+The self-similarity matrices on the left are based on pitch/chroma. The left SSM is a song called 'heavy metal' from BMTH's latest album *amo*. The SSM on the right is a song called 'walk' by Pantera. Pantera is an American groovemetalband who are known as trendsetters in their genre in the nineties. I chose this song to compare to 'heavy metal', because it is the most popular song from the Heavy Metal Spotify playlist. The reason I've chosen to compare these songs together is because the song is called heavy metal, but I want to know if it is actually a Heavy Metal song and therefore have similarities with 'walk'. 
 
-The 4th section is made up of songs from the last three albums (*Sempiternal*, *That's the Spirit* and *amo*). All the songs from *That's the Spirit* are in this 4th section and the majority of *amo* as well, but for *Sempiternal* this is not the section with the most songs in them. 
+First thing that is different about these two songs is the duration. 'heavy metal' is a lot shorter than 'walk'. The both matrices have a clear checkerboard pattern and can both be split up into 4 sections. The transitions from one section to the other are more clear in 'walk' than in 'heavy metal'. The other way around, 'heavy metal's' bridge is more defined than the bridge from 'walk'. 'walk' has the same guitar riff that keeps coming back after the verses. The bridge in 'walk' consist of a guitar solo, which playes on top of the melodies by the other instruments that have been playing throughout the rest of the song. This is not the case for 'heavy metal'. Here the bridge consist of a beatbox solo with some electronic sounds. So, the reason that the bridge in 'heavy metal' is more clear in the SSM is because totally new material is being used. This is unlike 'walk', where the guitar solo is accompanimented by repeated material. 
 
-*Sempiternal* scores the highest in the 2nd section, with 6 songs from 20 songs in that section. For *Count your Blessings* this section includes the majority of their songs as well (5 songs from the 10 songs on the album). 
-
-When looking at the 3rd section, *There is a Hell Believe Me I've Seen It. There is a Heaven Let's Keep it a Secret* stands out with 8 songs out of 17 in this section. All the other albums except for *That's the Spirit* also have a few songs in this section. 
-
-In general, the most recent albums are clustered together in one section and the older albums are clustered in others. This is very interessting, because it shows that the newer albums are different than the older ones and in such a manner that they (in general) won't cluster with eachother until very high up in the graph. 
-
-
-### Heatmap
+### An structural analysis of 'heavy metal' and Heavy Metal based on timbre
 
 ```{r}
 
+heavymetal_song <- 
+    get_tidy_audio_analysis('6baGTtDakSNvUfW3FJd8yX') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'acentre', norm = 'manhattan')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'mean'))
 
-# Heatmap
+walk_song <- 
+    get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'acentre', norm = 'manhattan')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'mean'))
 
-grDevices::dev.size("px")
-heatmaply(
-    bmth_songs_juice,
-    hclustfun = hclust,
-    # hclustfun = protoclust,
-    # Comment out the hclust_method line when using protoclust.
-    hclust_method = 'average',
-    dist_method = 'euclidean')
+songs_timbre <- 
+    bind_rows(
+        heavymetal_song %>% compmus_self_similarity(timbre, 'euclidean') %>% mutate(d = d / max(d), song = "heavy metal"),
+        walk_song %>% compmus_self_similarity(timbre, 'euclidean') %>% mutate(d = d / max(d), song = "walk")) %>% 
+    ggplot(
+        aes(
+            x = xstart + xduration / 2, 
+            width = xduration,
+            y = ystart + yduration / 2,
+            height = yduration,
+            fill = d)) + 
+    geom_tile() +
+    coord_fixed() +
+    facet_wrap(~ song) +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_classic() +
+    labs(x = '', y = '')
+
+ggplotly(songs_timbre)
+
 
 ```
+
 ***
+
+Last page the SSM were based on chroma. These on the left are based on timbre and still a checkerpattern can be seen, even though it is fusier. The sections that could be seen in the chroma SSM, are visible here as well. The guitar solo in 'walk' is defininately pressent in the timbre SSM. One thing that can not be seen in the chroma SSM, but can be in the timbre SSM is the intro. The intro is made up of a guitar melody that is being repeated throughout the rest of the song, but in a different guitar. The guitar sound from the intro doesn't come back and that is the reason the timbre SSM picks this difference up and the chroma SSM doesn't. 
+
+### Can a computer tell 'computerized' instruments apart from 'real' instruments?
+
+```{r}
+
+blues <- 
+    get_tidy_audio_analysis('1JdWRS3PBZlSgKcPKcULtr') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'rms', norm = 'euclidean')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'mean'))
+
+blues_cepstro <-
+blues %>% 
+    compmus_gather_timbre %>% 
+    ggplot(
+        aes(
+            x = start + duration / 2, 
+            width = duration, 
+            y = basis, 
+            fill = value)) + 
+    geom_tile() +
+    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
+    scale_fill_viridis_c(option = 'E') +
+    theme_classic()
+
+ggplotly(blues_cepstro)
+
+walk_cep <- 
+    get_tidy_audio_analysis('7fcfNW0XxTWlwVlftzfDOR') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'rms', norm = 'euclidean')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'mean'))
+
+walk_cepstro <-
+walk_cep %>% 
+    compmus_gather_timbre %>% 
+    ggplot(
+        aes(
+            x = start + duration / 2, 
+            width = duration, 
+            y = basis, 
+            fill = value)) + 
+    geom_tile() +
+    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
+    scale_fill_viridis_c(option = 'E') +
+    theme_classic()
+
+ggplotly(walk_cepstro)
+
+```
+
+***
+
+For this cepstrogram, I went to the extreme. In my opinion, 'nihilist blues' from *amo* is the most odd song on the whole album and even from the band as a whole. It has a electronic dance vide and no 'real' instruments can be heared throughout the whole song. That is the reason I'm comparing it to the song 'walk'. 'walk' is considered a Heavy Metal song and by comparing 'nihilist blues' to it, it will get clear how differnt this song is from what people are used to hearing from BMTH. 
+
+The difference is immidately visible. 'nihilist blues' has a magnitude between 0 and 100 for almost all the timbre features, while 'walk' look the total opposite. c06 is the only feature that has a darker magnitude throughout the whole song and c02 and c03 having them at a few places. For 'walk' c01 and especially c02 have a high magnitude. There are two places (short after 200 seconds) where c04 and c06 jumps out for a few seconds. 
+
+When listening to these two songs, there are definately different in everything, but especially in timbre. It is not only the differenc in the kind of instruments used, but also in 'real' and 'fake' instruments. The instruments on 'nihilist blues' are probably made by synthesizers and computers, while the instruments on 'walk' are real and recorded guitars, drums, ect. 
+
 
 ### Conclusion 
 
-By comparing the different albums of BMTH with eachother, it is clear that their newest album *amo* is different than the rest. The songs score higher on valence than the songs from older albums, which means they sound more 'positive'. 
+This portfolio has showed different ways to answer the main research question: Is Bring Me The Horizon creating a new musical image and what is this image exactly?
 
-When looking at the structure of songs from *amo* they are different from.... and similar in a way.....
+**Bring Me The Horizon has a new image?**
 
-It looks like a lot of newer songs cluster together.
+By comparing the different albums of BMTH with eachother, it is clear that their newest album *amo* is different than the rest. The songs score higher on valence than the songs from older albums, which means they sound more 'positive'. But, they don't score that different on the energy scale, which means the intensity and activity of the songs haven't significantly over the years. 
 
-All of these visualizations show that *amo* is clearly different than the older albums and is pulling away from the heavy metal image there was before. When looking at the visualizations though, the differences aren't that different. A lot of songs still have similar elements in them, but are just mixed with a lot of other genres. 
+The same goes with a key-based analysis. When comparing a song from the first album and the last album, I can't say that there is a clear difference between these two. Both don't modulate and include a bridge around the same time that drops a lot of instruments and therefore chords. 
 
-I think, BMTH shows a whole different side of them. They can do more than bang their heads and get people involved in moshpits. They are multitalented in regards of musical genres and are exploring wiht them. The reaction of fans might be scaddered, but the new 'image' might be an oppertunity to expand the fanbase. 
+Although not being that different in the usage of keys and the energy level, songs from the newest albums still cluster together. So, there is somethign that is similar in these songs and different in comparison to all the other songs, that brings them together. This doesn't mean though that it is the image of a heavy metal band that is what is different. Even the heatmap doesn't give a clear view of what these newer albums have in common and separate them from the rest. This might mean the thing that bring them together, is what separates them from the rest. *amo* is a mashup of different elements from different genres, in my opinion, which, indeed, might be a reason these 'outcasts' cluster together. 
 
-***
+**Bring Me The Horizon quits Heavy Metal?**
+
+The newer albums definately tend to have more in common with Punk and Rock than Heavy Metal. At least compared to the older albums. This changes isn't that strange though. These three genres are on the same 'side' of musical genres, so it is easy to switch between these and/or take elements from eachother. 
+
+In my opinion, the biggest difference in *amo* songs and Heavy Metal songs are the instruments. The difference in timbre in different analysis, give a strong argument for this. 
+
+**So, what's up with the new album?**
+
+With use of this portfolio, I can confirm that *amo* is clearly different than the other Bring Me The Horizon. But I don't think it is that different from what people are saying. There are a few songs that don't even have an element of Heavy Metal in them, but others do sound like Heavy Metal, just a little turned down. Also, in my opinion, the change didn't just happen with *amo*. I think that BMTH started shifting their interest and therefore there music, from *Sempiternal* and step for step go the way they wanted to with their music. They might lose some strong Heavy Metal fans because of this album, but they will definately gain a lot more fans as well.  
+
 
 ### Appendix 
 
