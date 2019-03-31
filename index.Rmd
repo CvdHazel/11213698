@@ -753,7 +753,8 @@ blues %>%
     geom_tile() +
     labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
     scale_fill_viridis_c(option = 'E') +
-    theme_classic()
+    theme_classic()+
+    ggtitle("nihilist blues")
 
 ggplotly(blues_cepstro)
 
@@ -784,7 +785,8 @@ walk_cep %>%
     geom_tile() +
     labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
     scale_fill_viridis_c(option = 'E') +
-    theme_classic()
+    theme_classic()+
+    ggtitle("walk")
 
 ggplotly(walk_cepstro)
 
